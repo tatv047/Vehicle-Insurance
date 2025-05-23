@@ -1,3 +1,31 @@
+## Workflow
+* constants
+* config_entity
+* artifacts
+* component
+* pipeline
+* app.py / demo.py
+
+---------------------------------------------------------------
+
+-> monogoDBConfig
+
+username: devutkarsh047
+password: VSIQUPUhNvbdxaya
+
+connection string: 
+mongodb+srv://devutkarsh047:VSIQUPUhNvbdxaya@cluster0.cfhbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+to setup the connection:
+$env:MONGODB_URL = "mongodb+srv://devutkarsh047:VSIQUPUhNvbdxaya@cluster0.cfhbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&connectTimeoutMS=30000&socketTimeoutMS=45000"
+
+the connection url is modified because on running the pipeline it was throwing timeout errors while fetching the data 
+from mongoDB
+
+-------------------------------------------------------
+
+
+
 Why __init__.py in every folder?
 A constructor file needed everywhere.
 
@@ -20,3 +48,6 @@ data_access: Contains modules for accessing data from external sources. For exam
 
 vehicle_insurance_data.py: Likely handles interactions with a MongoDB database to fetch or manipulate data.
 
+
+- proj1_data.py : it uses the mongo_db_connection.py to establish a connection with the database and fetch the data.It returns
+a pandas dataframe.
