@@ -1,5 +1,0 @@
-username: devutkarsh047
-password: VSIQUPUhNvbdxaya
-
-connection string: 
-mongodb+srv://devutkarsh047:<db_password>@cluster0.cfhbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
