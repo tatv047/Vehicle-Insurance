@@ -22,7 +22,7 @@
 
 # --------------------------------------------------------------------------------
 
-# from src.pipline.training_pipeline import TrainPipeline
+from src.pipline.training_pipeline import TrainingPipeline
 
-# pipline = TrainPipeline()
-# pipline.run_pipeline()
+pipline = TrainingPipeline()
+pipline.run_pipeline()
