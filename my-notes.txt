@@ -31,3 +31,5 @@ vehicle_insurance_data.py: Likely handles interactions with a MongoDB database t
 
 - proj1_data.py : it uses the mongo_db_connection.py to establish a connection with the database and fetch the data.It returns
 a pandas dataframe.
+
+- main_utils.py has many utility functions that can be used in other projects too.
