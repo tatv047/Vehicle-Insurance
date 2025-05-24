@@ -29,7 +29,7 @@ class DataTransformation:
     @staticmethod
     def read_data(file_path)->pd.DataFrame:
         try:
-            pd.read_csv(file_path)
+            return pd.read_csv(file_path)
         except Exception as e:
             raise MyException(e,sys) 
 
@@ -80,7 +80,7 @@ class DataTransformation:
     def _create_dummy_columns(self,df):
         """Create dummy variables for categorical features"""
         logging.info("Creating dummy variables for categorical features")
-        df = pd.get_dummies(df,drop_first=True)
+        df = pd.get_dummies(df,columns=['Vehicle_Age','Vehicle_Damage'],drop_first=True)
         return df 
 
     def _rename_columns(self,df):
@@ -99,9 +99,18 @@ class DataTransformation:
         """Drop the 'id' column if it exists"""
         logging.info("Dropping the 'id' column")
         drop_col = self._schema_config["drop_columns"]
-        if drop_col in df.columns:
-            df = df.drop(drop_col,axis = 1)
-        return df 
+
+        #Handle both single column (string) and multiple columns (list)
+        if isinstance(drop_col, list):
+            # If it's a list, check each column and drop existing ones
+            cols_to_drop = [col for col in drop_col if col in df.columns]
+            if cols_to_drop:
+                df = df.drop(cols_to_drop, axis=1)
+        else:
+            # If it's a single column (string)
+            if drop_col in df.columns:
+                df = df.drop(drop_col, axis=1)
+        return df
     
     def initiate_data_transformation(self)-> DataTransformationArtifact:
         """
@@ -128,6 +137,7 @@ class DataTransformation:
 
             # Apply custom transformations in specified sequence
             input_feature_train_df = self._map_gender_column(input_feature_train_df)
+            # logging.info(f"columns: {input_feature_train_df.dtypes}")
             input_feature_train_df = self._drop_id_column(input_feature_train_df)
             input_feature_train_df = self._create_dummy_columns(input_feature_train_df)
             input_feature_train_df = self._rename_columns(input_feature_train_df)
@@ -145,22 +155,31 @@ class DataTransformation:
             logging.info("Initialising scaling transformation for Training Data")
             input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
             logging.info("Initialising scaling transformation for Testing Data")
-            input_feature_test_arr = preprocessor.fit_transform(input_feature_test_df)
+            input_feature_test_arr = preprocessor.transform(input_feature_test_df)
             logging.info("Scaling transformations done for both training and testing data")
+
+            logging.info(f"Train Input features datatypes: {input_feature_train_df.dtypes}")
+            logging.info(f"Test Input features datatypes: {input_feature_test_df.dtypes}")
 
             logging.info("Applying SMOTEENN for handling imbalanced dataset.")
             smt = SMOTEENN(sampling_strategy="minority")
             input_feature_train_final,target_feature_train_final = smt.fit_resample(
                 input_feature_train_arr,target_feature_train_df
             )
-            input_feature_test_final,target_feature_test_final = smt.fit_resample(
-                input_feature_test_arr,target_feature_test_df
-            )
-            logging.info("SMOTEENN applied to train-test data")
+            logging.info("SMOTEENN applied to training data")
+            input_feature_test_final = input_feature_test_arr
+            target_feature_test_final = target_feature_test_df
+            logging.info("Test data kept in original distribution")   # you don't apply it on test data
+            # input_feature_train_final = input_feature_train_arr
+            # target_feature_train_final = target_feature_train_df
+            # input_feature_test_final = input_feature_test_arr
+            # target_feature_test_final = target_feature_test_df
+            
 
             train_arr = np.c_[input_feature_train_final,np.array(target_feature_train_final)]
             test_arr = np.c_[input_feature_test_final,np.array(target_feature_test_final)]
             logging.info("Feature-target concated for train-test df")
+            
 
             save_object(self.data_transformation_config.transformed_object_file_path,preprocessor)
             save_numpy_array_data(self.data_transformation_config.transformed_train_file_path,array = train_arr)
