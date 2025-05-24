@@ -29,6 +29,9 @@ categorical_columns:
 
 drop_columns:
   - id
+  - _id
+  - user_hash
+  - session_id
 
 # for data transformation
 num_features: # for standard scaling
