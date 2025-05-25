@@ -176,3 +176,5 @@ cython_debug/
 artifact/
 
 mongoDBConfig.txt
+
+credentials.txt
