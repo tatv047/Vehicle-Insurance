@@ -92,7 +92,7 @@ class ModelTrainer:
             logging.info("Preprocessing object loaded")
 
             # Check if the model's accuracy meets the expected threshold
-            if accuracy_score(test_arr[:,-1],trained_model.predict(test_arr[:,:-1])) < self.model_trainer_config.expected_accuracy:
+            if accuracy_score(train_arr[:,-1],trained_model.predict(train_arr[:,:-1])) < self.model_trainer_config.expected_accuracy:
                 logging.info("No model found with score above the base score")
                 raise Exception("No model found with score above the base score")
             

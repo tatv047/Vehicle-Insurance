@@ -87,10 +87,10 @@ class DataTransformation:
         """Rename specific columns and ensure integer type for dummy values"""   
         logging.info("Renaming specific columns and casting to int")
         df = df.rename(columns = {
-            "Vehicle_Age_< 1 Year" : "Vehicle_Age_lt_1_year",
-            "Vehicle_Age_> 2 Years" : "Vehicle_Age_gt_2_year"
+            "Vehicle_Age_< 1 Year" : "Vehicle_Age_lt_1_Year",
+            "Vehicle_Age_> 2 Years" : "Vehicle_Age_gt_2_Years"
         })     
-        for col in ["Vehicle_Age_lt_1_year","Vehicle_Age_gt_2_year","Vehicle_Damage_Yes"]:
+        for col in ["Vehicle_Age_lt_1_Year","Vehicle_Age_gt_2_Years","Vehicle_Damage_Yes"]:
             if col in df.columns:
                 df[col] = df[col].astype(int)
         return df
