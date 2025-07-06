@@ -1,0 +1,16 @@
+artifact
+venv
+env
+.gitignore
+logs
+template.py
+demo.py 
+README.md
+LICENSE
+src.egg.-info
+notebook
+crashcourse.txt
+credentials.txt 
+ml-project-file-structure.md 
+my-notes.txt 
+projectflow.txt 
