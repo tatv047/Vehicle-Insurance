@@ -176,7 +176,7 @@ cython_debug/
 artifact/
 
 mongoDBConfig.txt
-crashcourse.txt
+
 credentials.txt
-my-notes.txt 
-ml-project-file-structure.md
+
+notes/
