@@ -1,4 +1,4 @@
-# Vehicle-Insurance-ML-Pipeline-MLOps
+# Vehicle-Insurance-Prediction-MLOps
 
 ## 📁 Project Setup and Structure
 
